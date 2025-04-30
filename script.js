@@ -26,23 +26,15 @@ function addBookToLibrary(myLibrary, title, author, pages, haveRead) {
 function displayLibrary(myLibrary) {
     myLibrary.forEach(book => {
         const container = document.querySelector(".book-container");
-        const bookElm = document.createElement("div");
-        bookElm.classList.add("book");
-        bookElm.setAttribute("id", book.id);
-        bookElm.textContent = book.info();
-        const deleteButton = document.createElement("div");
-        deleteButton.classList.add("delete");
-        const haveReadButton = document.createElement("div");
-        haveReadButton.classList.add("read");
-        bookElm.appendChild(deleteButton);
-        bookElm.appendChild(haveReadButton);
+        const bookElm = createBook(book);
         container.appendChild(bookElm);
     });
 }
 
 function removeBook(myLibrary, id) {
-    const newLibrary = myLibrary.filter(book => book.id !== id);
-    return newLibrary;
+    const theBookIndex = myLibrary.findIndex(book => book.id === id);
+    console.log(theBookIndex)
+    myLibrary.splice(theBookIndex, 1);
 }
 
 function changeHaveReadStatus(myLibrary, id, haveRead) {
@@ -50,6 +42,47 @@ function changeHaveReadStatus(myLibrary, id, haveRead) {
     myLibrary[theBookIndex].haveRead = haveRead;
 }
 
+function createBook(book) {
+    const bookElm = document.createElement("div");
+    bookElm.classList.add("book");
+    bookElm.setAttribute("book-id", book.id);
+    bookElm.textContent = book.info();
+    const deleteButton = document.createElement("div");
+    deleteButton.classList.add("delete");
+    deleteButton.setAttribute("book-id", book.id);
+    deleteButton.textContent = "delete book";
+    deleteButton.addEventListener("click", deleteHandler);
+    const haveReadButton = document.createElement("div");
+    haveReadButton.classList.add("read");
+    haveReadButton.setAttribute("book-id", book.id);
+    haveReadButton.textContent = "read / unread";
+    bookElm.appendChild(deleteButton);
+    bookElm.appendChild(haveReadButton);
+    return bookElm;
+}
+
+function reloadLibrary() {
+    const container = document.querySelector(".book-container");
+    const books = container.querySelectorAll(".book");
+    books.forEach(book => {
+        book.remove();
+    })
+    myLibrary.forEach(book => {
+        const bookElm = createBook(book);
+        container.appendChild(bookElm);
+    })
+}
+
+function deleteHandler() {
+    const id = this.getAttribute("book-id");
+    removeBook(myLibrary, id);
+    reloadLibrary();
+    return;
+}
+
 const momotaro = addBookToLibrary(myLibrary, "momotaro", "kentaro", 20, true);
 const snowWhite = addBookToLibrary(myLibrary, "snowWhite", "lisa elsa", 400, false);
 displayLibrary(myLibrary);
+// console.log(myLibrary);
+const books = document.querySelectorAll(".book");
+
