@@ -28,7 +28,14 @@ function displayLibrary(myLibrary) {
         const container = document.querySelector(".book-container");
         const bookElm = document.createElement("div");
         bookElm.classList.add("book");
+        bookElm.setAttribute("id", book.id);
         bookElm.textContent = book.info();
+        const deleteButton = document.createElement("div");
+        deleteButton.classList.add("delete");
+        const haveReadButton = document.createElement("div");
+        haveReadButton.classList.add("read");
+        bookElm.appendChild(deleteButton);
+        bookElm.appendChild(haveReadButton);
         container.appendChild(bookElm);
     });
 }
