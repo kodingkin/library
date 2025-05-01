@@ -23,6 +23,9 @@
         &:hover {
             background-color: #ed9393;
         }
+        &:active {
+            transform: scale(1.5);
+        }
     }
 }
 
@@ -38,12 +41,15 @@
     flex-direction: column;
 }
 
-.submit {
+.submit > button {
     background-color: #eab8b8;
     padding: 5px 10px;
     border-radius: 10px;
     line-height: 34px;
     &:hover {
         background-color: #ed9393;
+    }
+    &:active {
+        transform: scale(1.5);
     }
 }

@@ -11,22 +11,31 @@
     <div class="title">The Library</div>
     <div class="book-container"></div>
     <div class="book-creator">
-        <div class="form">
+        <div class="form" action="index.html" method="post">
             <div class="legend">Create new book and put it into the library</div>
             <div class="input">
                 <div class="input-place">
-                    <label for="">Book Name</label>
-                    <input type="text">
+                    <label for="name">Book Name</label>
+                    <input type="text" id="name">
                 </div>
                 <div class="input-place">
-                    <label for="">Author</label>
-                    <input type="text">
+                    <label for="author">Author</label>
+                    <input type="text" id="author">
                 </div>
                 <div class="input-place">
-                    <label for="">Page Numer</label>
-                    <input type="text">
+                    <label for="page-number">Page Numer</label>
+                    <input type="text" id="page-number">
                 </div>
-                <div class="submit">Submit</div>
+                <div class="input-place">
+                    <label for="have-read">Have read already</label>
+                    <select name="have-read" id="have-read">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                    </select>
+                </div>
+                <div class="submit">
+                    <button type="submit" id="submit">Submit</button>
+                </div>
             </div>
         </div>
     </div>

@@ -33,8 +33,17 @@ function displayLibrary(myLibrary) {
 
 function removeBook(myLibrary, id) {
     const theBookIndex = myLibrary.findIndex(book => book.id === id);
-    console.log(theBookIndex)
     myLibrary.splice(theBookIndex, 1);
+}
+
+function readBook(id) {
+    const theBookIndex = myLibrary.findIndex(book => book.id === id);
+    thisHaveRead = myLibrary[theBookIndex].haveRead;
+    if (thisHaveRead === true) {
+        myLibrary[theBookIndex].haveRead = false;
+    } else {
+        myLibrary[theBookIndex].haveRead = true;
+    }
 }
 
 function changeHaveReadStatus(myLibrary, id, haveRead) {
@@ -56,12 +65,13 @@ function createBook(book) {
     haveReadButton.classList.add("read");
     haveReadButton.setAttribute("book-id", book.id);
     haveReadButton.textContent = "read / unread";
+    haveReadButton.addEventListener("click", readHandler);
     bookElm.appendChild(deleteButton);
     bookElm.appendChild(haveReadButton);
     return bookElm;
 }
 
-function reloadLibrary() {
+function reloadScreen() {
     const container = document.querySelector(".book-container");
     const books = container.querySelectorAll(".book");
     books.forEach(book => {
@@ -76,13 +86,32 @@ function reloadLibrary() {
 function deleteHandler() {
     const id = this.getAttribute("book-id");
     removeBook(myLibrary, id);
-    reloadLibrary();
+    reloadScreen();
     return;
+}
+
+function readHandler() {
+    const id = this.getAttribute("book-id");
+    readBook(id);
+    reloadScreen();
+}
+
+function submitHandler() {
+    const name = document.querySelector("#name").value;
+    const author = document.querySelector("#author").value;
+    const page = document.querySelector("#page-number").value;
+    const haveRead = document.querySelector("#have-read").value;
+    const intPageNumber = parseInt(page);
+    const haveReadBoolean = haveRead === "true" ? true : false;
+    addBookToLibrary(myLibrary, name, author, intPageNumber, haveReadBoolean);
+    reloadScreen();
 }
 
 const momotaro = addBookToLibrary(myLibrary, "momotaro", "kentaro", 20, true);
 const snowWhite = addBookToLibrary(myLibrary, "snowWhite", "lisa elsa", 400, false);
 displayLibrary(myLibrary);
-// console.log(myLibrary);
 const books = document.querySelectorAll(".book");
+
+const submitBtn = document.querySelector("#submit");
+submitBtn.addEventListener("click", submitHandler);
 
